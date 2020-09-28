@@ -1,12 +1,16 @@
 package com.example.demo;
 
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+
+import java.util.Scanner;
 
 public class CodeGeneration {
 
@@ -39,9 +43,9 @@ public class CodeGeneration {
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDbType(DbType.MYSQL);
         dsc.setDriverName("com.mysql.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("123");
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/pay_region_db?autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC");
+        dsc.setUsername("utopa_dev");
+        dsc.setPassword("5&lQ!5DH");
+        dsc.setUrl("jdbc:mysql://47.96.139.215:3306/utopa?autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC");
         mpg.setDataSource(dsc);
  
         // 策略配置
@@ -52,7 +56,7 @@ public class CodeGeneration {
         strategy.setSuperServiceClass(null);
         strategy.setSuperServiceImplClass(null);
         strategy.setSuperMapperClass(null);
- 
+        strategy.setInclude(scanner("liq_settlement_reconciliation"));
         mpg.setStrategy(strategy);
  
         // 包配置
@@ -69,6 +73,26 @@ public class CodeGeneration {
         // 执行生成
         mpg.execute();
  
+    }
+
+
+    /**
+     * <p>
+     * 读取控制台内容
+     * </p>
+     */
+    public static String scanner(String tip) {
+        Scanner scanner = new Scanner(System.in);
+        StringBuilder help = new StringBuilder();
+        help.append("请输入" + tip + "：");
+        System.out.println(help.toString());
+        if (scanner.hasNext()) {
+            String ipt = scanner.next();
+            if (StringUtils.isNotEmpty(ipt)) {
+                return ipt;
+            }
+        }
+        throw new MybatisPlusException("请输入正确的" + tip + "！");
     }
  
 }
