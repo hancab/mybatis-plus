@@ -46,6 +46,7 @@ public class MybatisPlusConfig {
 
 
     /**
+     *
      * SQL执行效率插件
      */
     @Bean
