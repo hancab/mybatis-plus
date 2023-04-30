@@ -54,4 +54,9 @@ public class MybatisPlusConfig {
     public PerformanceInterceptor performanceInterceptor() {
         return new PerformanceInterceptor();
     }
+
+    public static void main(String[] args) {
+        String i = "";
+        System.out.println(i);
+    }
 }
