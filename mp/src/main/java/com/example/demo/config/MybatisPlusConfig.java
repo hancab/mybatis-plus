@@ -1,10 +1,7 @@
 package com.example.demo.config;
 
-import com.baomidou.mybatisplus.core.injector.ISqlInjector;
-import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
-import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,37 +19,14 @@ public class MybatisPlusConfig {
      * @return
      */
     @Bean
-    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
-        return new OptimisticLockerInterceptor();
-    }
+    public MybatisPlusInterceptor mybatisPlusInterceptor(){
+        //1 创建MybatisPlusInterceptor拦截器对象
+        MybatisPlusInterceptor mpInterceptor=new MybatisPlusInterceptor();
+        //2 添加乐观锁拦截器
+        mpInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        //分页插件
 
-    /**
-     * 分页插件
-     */
-    @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
-    }
-
-
-    /**
-     * 配置逻辑删除
-     * @return
-     */
-    @Bean
-    public ISqlInjector sqlInjector() {
-        return new LogicSqlInjector();
-    }
-
-
-    /**
-     *
-     * SQL执行效率插件
-     */
-    @Bean
-    //@Profile({"dev","test"}) 设置 dev test 环境开启
-    public PerformanceInterceptor performanceInterceptor() {
-        return new PerformanceInterceptor();
+        return mpInterceptor;
     }
 
     public static void main(String[] args) {
